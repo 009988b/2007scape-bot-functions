@@ -104,8 +104,11 @@ def get_color_masks(image):
         for c in contours:
             x, y, w, h = cv.boundingRect(c)
             rect = [x, y, w, h]
-            if is_interactable and w + h > 180:
+            center_pt = (int(x+w-(w/2)),int(y+h-(h/2)))
+            if is_interactable and w + h > 200:
                 cv.rectangle(output, (rect[0], rect[1]), (rect[0] + rect[2], rect[1] + rect[3]), (255, 255, 255), 2)
+                print(center_pt)
+                cv.circle(output, center_pt, 3, (0,0,255), 1)
                 r.append(rect)
             elif is_player_mask and w + h > 20:
                 # cv.rectangle(output, (rect[0], rect[1]), (rect[0] + rect[2], rect[1] + rect[3]), (255, 255, 255), 2)
@@ -156,9 +159,11 @@ def get_bounding_rect_from_pts(pts):
 
 
 def rect_center(rect, offset):
-    # [(x1,y1),(x2,y2)]
-    print(rect)
-    return (((rect[0][0] + rect[1][0]) / 2) + offset, ((rect[0][1] + rect[1][1]) / 2) + offset)
+    x = rect[0]
+    y = rect[1]
+    w = rect[2]
+    h = rect[3]
+    return (int(x+w-(w/2)),int(y+h-(h/2)))
 
 
 def similar(a, b):

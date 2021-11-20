@@ -1,4 +1,5 @@
 import pyautogui
+import random
 
 
 def start_afk_agility(obstacles):

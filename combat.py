@@ -4,7 +4,7 @@ from PIL import ImageGrab, Image, ImageOps
 import numpy as np
 import math
 import cv2 as cv
-from inventory import get_inventory_item_rects, get_item_icon
+import inventory as inv
 from utilities import get_bounding_rect_from_pts
 
 
@@ -54,8 +54,8 @@ def get_pickup_rects(o_img, cnts):  # returns bounding rect(s) of item(s) to pic
 
 
 def bury_bones(min_bone_count):
-    inv_img, bones = get_inventory_item_rects(get_item_icon(526))
-    inv_img2, big_bones = get_inventory_item_rects(get_item_icon(532))
+    inv_img, bones = inv.get_item_rects(inv.get_icon(526))
+    inv_img2, big_bones = inv.get_item_rects(inv.get_icon(532))
     if len(bones) + len(big_bones) > min_bone_count:
         for rect in bones:
             rect[0]
