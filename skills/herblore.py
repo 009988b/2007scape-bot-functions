@@ -37,13 +37,9 @@ def craft_inv_pots():
 
 
 def cleaning(bank_tab, bank_coord):
-    i = ImageGrab.grab(bbox=dimensions)
-    i_np = np.array(i)
-    i_np = cv.cvtColor(i_np, cv.COLOR_BGR2RGB)
-    masks, rects, items, players = get_color_masks(i_np)
     # herb cleaning
     clean_inv()
-    if len(rects[2]) > 0:
+    if not bank.is_open():
         bank.open(rects[2])
     time.sleep(1)
     bank.deposit_all()
@@ -53,14 +49,8 @@ def cleaning(bank_tab, bank_coord):
 
 
 def craft_unf_pots(bank_tab, vial_coord, herb_coord, is_init):
-    i = ImageGrab.grab(bbox=dimensions)
-    i_np = np.array(i)
-    i_np = cv.cvtColor(i_np, cv.COLOR_BGR2RGB)
-    masks, rects, items, players = get_color_masks(i_np)
-    cv.imshow("frame", masks[2])
     # unf pot crafting
-    print("opening bank - booths found:" + str(len(rects[2])))
-    if len(rects[2]) > 0:
+    if not bank.is_open():
         bank.open(rects[2])
         time.sleep(1.2)
         if is_init:
@@ -72,23 +62,10 @@ def craft_unf_pots(bank_tab, vial_coord, herb_coord, is_init):
     time.sleep(0.1)
     craft_inv_pots()
     time.sleep(10.2)
-    i = ImageGrab.grab(bbox=dimensions)
-    i_np = np.array(i)
-    i_np = cv.cvtColor(i_np, cv.COLOR_BGR2RGB)
-    masks, rects, items, players = get_color_masks(i_np)
-    print("opening bank (2nd time) - booths found:" + str(len(rects[2])))
-    cv.imshow("frame", masks[2])
-    if len(rects[2]) > 0:
+    if not bank.is_open():
         bank.open(rects[2])
     time.sleep(0.6)
-    i = ImageGrab.grab(bbox=dimensions)
-    i_np = np.array(i)
-    i_np = cv.cvtColor(i_np, cv.COLOR_BGR2RGB)
-    masks, rects, items, players = get_color_masks(i_np)
-    time.sleep(0.45)
-    print("bankbooths found: " + str(len(rects[2])))
-    cv.imshow("frame", masks[2])
-    if len(rects[2]) == 0:
+    if bank.is_open():
         bank.deposit_all()
     time.sleep(0.3)
     if is_init:
