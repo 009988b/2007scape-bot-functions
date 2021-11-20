@@ -4,7 +4,7 @@ from random import randint, random
 from PIL import ImageGrab
 import numpy as np
 import time
-from ..utilites.core import banking as bank, inventory as inv
+from utilities import banking as bank, inventory as inv
 
 
 def clean_inv():
