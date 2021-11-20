@@ -1,16 +1,8 @@
-import numpy as np
-import math
 import time
-import sys
 import cv2 as cv
 import win32gui
-import pyautogui
-from random import randint, random
-from PIL import ImageGrab, Image, ImageOps
-import banking as bank
-import inventory as inv
-import herblore
-import utilities
+import utilities.inventory as inv
+import skills.herblore as h
 import pytesseract
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
@@ -54,10 +46,10 @@ if __name__ == "__main__":
     init_time = time.time()
     est_time_left = 3600
     while True:
-        #if attempts == 1:
-            #est_time_left = start_herblore(sys.argv, attempts)
-        #else:
-            #start_herblore(sys.argv, attempts)
+        if attempts == 1:
+            est_time_left = h.start(sys.argv, attempts)
+        else:
+            h.start(sys.argv, attempts)
         attempts += 1
         if end - init_time > (est_time_left*60):
             break

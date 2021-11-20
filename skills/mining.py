@@ -4,7 +4,7 @@ from random import randint, random
 from PIL import ImageGrab, Image, ImageOps
 import numpy as np
 import math
-import inventory as inv
+from utilities import inventory as inv
 import pytesseract
 
 

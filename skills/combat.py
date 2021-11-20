@@ -1,11 +1,10 @@
 import pyautogui
-from random import randint, random
-from PIL import ImageGrab, Image, ImageOps
-import numpy as np
+from random import random
+from PIL import ImageGrab
 import math
 import cv2 as cv
-import inventory as inv
-from utilities import get_bounding_rect_from_pts
+from utilities import inventory as inv
+from utilities.core import get_bounding_rect_from_pts
 
 
 def get_pickup_rects(o_img, cnts):  # returns bounding rect(s) of item(s) to pickup
