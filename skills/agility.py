@@ -2,7 +2,7 @@ import pyautogui
 import random
 
 
-def start_afk_agility(obstacles):
+def start(obstacles):
     if len(obstacles) > 0:
         selected = obstacles[0]
         rand = random() * 12

@@ -68,7 +68,7 @@ def bury_bones(min_bone_count):
             pyautogui.click(clicks=1, interval=random() * 3, button='left')
 
 
-def start_combat(targets, items, players, target_mask, selected):
+def start(targets, items, players, target_mask, selected):
     combat_img = ImageGrab.grab(bbox=[10, 50, 140, 69])
     enemy_name = pytesseract.image_to_string(combat_img)
     for name in marked_enemy_names:

@@ -8,7 +8,7 @@ from utilities import inventory as inv
 import pytesseract
 
 
-def start_mining(nodes, attempts):
+def start(nodes, attempts):
     inv_img, ores = inv.get_item_rects(inv.get_icon(440))
     length = len(ores)
     status_img = ImageGrab.grab(bbox=[5, 45, 140, 69])
