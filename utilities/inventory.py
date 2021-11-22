@@ -3,7 +3,9 @@ import cv2 as cv
 from osrsbox import items_api, monsters_api
 import requests
 from io import BytesIO
-
+from random import random
+import pyautogui, time
+import numpy as np
 
 all_db_items = items_api.load()
 all_db_monsters = monsters_api.load()
@@ -56,9 +58,10 @@ def get_item_rects(template_img):
     loc = np.where(res >= thresh)
     rects = []  # position boxes on screen
     for pt in zip(*loc[::-1]):
-        rect = [(pt[0], pt[1]), (pt[0] + w, pt[1] + h)]
-        cv.rectangle(img_rgb, rect[0], rect[1], (255, 255, 255), 2)
+        rect = [pt[0],pt[1],w,h]
+        #cv.rectangle(img_rgb, rect[0], rect[1], (255, 255, 255), 2)
         rects.append(rect)
+    print("matches found: " + str(len(rects)))
     return img_rgb, rects
 
 

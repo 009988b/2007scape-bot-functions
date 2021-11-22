@@ -5,11 +5,15 @@ import pytesseract
 from PIL import ImageGrab
 import numpy as np
 import cv2 as cv
+from utilities import core
+
+
+dimensions = core.dimensions
 
 
 def open(rects):
     offset = randint(-2, 2)
-    pt = rect_center(rects[0], offset)
+    pt = core.rect_center(rects[0], offset)
     pyautogui.moveTo(pt[0],pt[1],random()/5,pyautogui.easeInQuad)
     pyautogui.click(clicks=1, interval=random() / 2, button='left')
     #pyautogui.moveTo(pyautogui.position().x, pyautogui.position().y + 45)
@@ -20,14 +24,14 @@ def is_open(debug_show):
     i = ImageGrab.grab(bbox=dimensions)
     i_np = np.array(i)
     i_np = cv.cvtColor(i_np, cv.COLOR_BGR2RGB)
-    masks, rects, items, players = get_color_masks(i_np)
+    masks, rects, items, players = core.get_color_masks(i_np)
     if debug_show is True:
         cv.imshow("bank_debug", masks[2])
         print("bank booths found:" + str(len(rects[2])))
     if len(rects[2]) > 0:
-        return False
+        return rects, False
     else:
-        return True
+        return None, True
 
 def set_quantity(quantity):
     if quantity == "all":

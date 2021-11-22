@@ -1,9 +1,9 @@
 import time
 import cv2 as cv
-import win32gui
-import utilities.inventory as inv
-import skills.herblore as h
+from utilities import inventory as inv, core
+from skills import herblore as h, fletching as fl, magic as ma
 import pytesseract
+import sys
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 # define the list of boundaries
@@ -20,36 +20,40 @@ item_ids_to_fetch = [
 ]
 
 
-def find_window():  # find window name returns PID of the window
-    global hwnd
-    hwnd = win32gui.FindWindow(None, "RuneLite - r00ntang")
-    # hwnd = win32gui.GetForegroundWindow()860
-    print('findWindow:', hwnd)
-    win32gui.SetActiveWindow(hwnd)
-    # win32gui.ShowWindow(hwnd)
-    win32gui.MoveWindow(hwnd, 0, 0, 865, 830, True)
+
 
 
 if __name__ == "__main__":
-    find_window()
+    core.find_window()
     item_icons = []
     inventory = []
     # drop = right click, +30y, left click
     for id in item_ids_to_fetch:
         item_icons.append((id, inv.get_icon(id)))
-    dimensions = win32gui.GetWindowRect(hwnd)
     selected = None
     status = ""
+    mode = sys.argv[1]
     attempts = 0
     moving = False
     # face_camera_north()
     init_time = time.time()
     est_time_left = 3600
     while True:
-        if attempts == 1:
-            est_time_left = h.start(sys.argv, attempts)
+        if mode == "pots" or mode == "clean":
+            if attempts == 1:
+                est_time_left, end = h.start(sys.argv, attempts)
+            else:
+                unused, end = h.start(sys.argv, attempts)
+        elif mode == "enchant":
+            if attempts == 1:
+                est_time_left, end = ma.start(sys.argv, attempts)
+            else:
+                unused, end = ma.start(sys.argv, attempts)
         else:
-            h.start(sys.argv, attempts)
+            if attempts == 1:
+                est_time_left, end = fl.start(sys.argv, attempts)
+            else:
+                unused, end = fl.start(sys.argv, attempts)
         attempts += 1
         if end - init_time > (est_time_left*60):
             break

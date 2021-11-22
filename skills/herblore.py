@@ -5,6 +5,7 @@ from PIL import ImageGrab
 import numpy as np
 import time
 from utilities import banking as bank, inventory as inv
+import sys
 
 
 def clean_inv():
@@ -30,27 +31,26 @@ def clean_inv():
 
 def craft_inv_pots():
     #with full inv
-    rand = random() * 6
-    if random() > 0.5:
-        rand *= -1
     inv.use((randint(0,2),randint(0,2)),(randint(2,3),randint(5,6)),(250,750))
 
 
 def cleaning(bank_tab, bank_coord):
     # herb cleaning
     clean_inv()
-    if not bank.is_open():
+    rects, isOpen = bank.is_open(False)
+    if not isOpen:
         bank.open(rects[2])
     time.sleep(1)
     bank.deposit_all()
     bank.withdraw(bank_tab, bank_coord, True)
     time.sleep(0.5)
-    bank.close_bank()
+    bank.close()
 
 
 def craft_unf_pots(bank_tab, vial_coord, herb_coord, is_init):
     # unf pot crafting
-    if not bank.is_open():
+    rects, isOpen = bank.is_open(False)
+    if not isOpen:
         bank.open(rects[2])
         time.sleep(1.2)
         if is_init:
@@ -62,10 +62,12 @@ def craft_unf_pots(bank_tab, vial_coord, herb_coord, is_init):
     time.sleep(0.1)
     craft_inv_pots()
     time.sleep(10.2)
-    if not bank.is_open():
+    rects, isOpen = bank.is_open(False)
+    if not isOpen:
         bank.open(rects[2])
     time.sleep(0.6)
-    if bank.is_open():
+    rects, isOpen = bank.is_open(False)
+    if isOpen:
         bank.deposit_all()
     time.sleep(0.3)
     if is_init:
@@ -81,7 +83,9 @@ def start(argv, attempts):
     # cv.imshow("frame", masks[2])
     # for rect in rects[2]:
     # print(rect)
+    num = 0
     if argv[1] == "pots":
+        num = 14
         if attempts == 0:
             craft_unf_pots(1, (0, 0), (1, 0), True)
         else:
@@ -90,12 +94,12 @@ def start(argv, attempts):
         elapsed = end - start
         rate = (14 / (elapsed / 60)) * 60
     elif argv[1] == "clean":
-        cleaning(1, (1, 0))
+        cleaning(1, (2, 0))
         end = time.time()
         elapsed = end - start
         rate = (28 / (elapsed / 60)) * 60
-    est_time_left = (int(sys.argv[2])-(elapsed*attempts) / rate) * 60
+    est_time_left = ((int(argv[2])-(num*attempts)) / rate) * 60
     print("script running for approx " + str(est_time_left) + "more minutes.")
     print("loop count - " + str(attempts))
     print("rate: " + str(rate) + " pots/hour")
-    return est_time_left
+    return est_time_left, end

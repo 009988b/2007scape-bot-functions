@@ -5,6 +5,8 @@ from random import randint, random
 from PIL import ImageGrab, Image, ImageOps
 from difflib import SequenceMatcher
 import pytesseract
+import win32gui
+
 
 boundary_colors = [
     ([0, 70, 235], [0, 80, 255]),  # PLAYER COLOR - 0
@@ -13,6 +15,8 @@ boundary_colors = [
     ([180, 0, 235], [255, 15, 255]),  # HIGHLIGHTED ITEM (PICK UP)- 3
     ([250, 250, 0], [255, 255, 5])  # UNIT TO ATTACK   (CYAN)   - 4
 ]
+
+
 
 
 def get_other_player_rects(o_img, cnts):  # returns bounding rect(s) of other player(s) on screen
@@ -64,6 +68,20 @@ def get_other_player_rects(o_img, cnts):  # returns bounding rect(s) of other pl
         cv.rectangle(o_img, player[0], player[1], (0, 0, 255), 1)
         i += 1
     return players
+
+
+def find_window():  # find window name returns PID of the window
+    global hwnd
+    hwnd = win32gui.FindWindow(None, "RuneLite - r00ntang")
+    # hwnd = win32gui.GetForegroundWindow()860
+    print('findWindow:', hwnd)
+    win32gui.SetActiveWindow(hwnd)
+    # win32gui.ShowWindow(hwnd)
+    win32gui.MoveWindow(hwnd, 0, 0, 865, 830, True)
+    return win32gui.GetWindowRect(hwnd)
+
+
+dimensions = find_window()
 
 
 def get_color_masks(image):
