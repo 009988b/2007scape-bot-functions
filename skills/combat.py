@@ -1,6 +1,6 @@
 import pyautogui
 from random import random
-from PIL import ImageGrab
+import pyscreenshot as ImageGrab
 import math
 import cv2 as cv
 from utilities import inventory as inv

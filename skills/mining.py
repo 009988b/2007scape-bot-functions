@@ -1,11 +1,12 @@
 import pyautogui
 import cv2 as cv
 from random import randint, random
-from PIL import ImageGrab, Image, ImageOps
+from PIL import Image, ImageOps
 import numpy as np
 import math
 from utilities import inventory as inv
 import pytesseract
+import pyscreenshot as ImageGrab
 
 
 def start(nodes, attempts):

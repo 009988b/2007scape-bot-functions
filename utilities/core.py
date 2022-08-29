@@ -2,11 +2,12 @@ import numpy as np
 import math
 import cv2 as cv
 from random import randint, random
-from PIL import ImageGrab, Image, ImageOps
+from PIL import Image, ImageOps
 from difflib import SequenceMatcher
 import pytesseract
 import win32gui
-
+import pyscreenshot as ImageGrab
+import platform
 
 boundary_colors = [
     ([0, 70, 235], [0, 80, 255]),  # PLAYER COLOR - 0
@@ -71,15 +72,21 @@ def get_other_player_rects(o_img, cnts):  # returns bounding rect(s) of other pl
 
 
 def find_window():  # find window name returns PID of the window
-    global hwnd
-    hwnd = win32gui.FindWindow(None, "RuneLite - r00ntang")
-    # hwnd = win32gui.GetForegroundWindow()860
-    print('findWindow:', hwnd)
-    win32gui.SetActiveWindow(hwnd)
-    # win32gui.ShowWindow(hwnd)
-    win32gui.MoveWindow(hwnd, 0, 0, 865, 830, True)
-    return win32gui.GetWindowRect(hwnd)
-
+    if platform.system() == 'Windows':
+        global hwnd
+        hwnd = win32gui.FindWindow(None, "RuneLite - r00ntang")
+        # hwnd = win32gui.GetForegroundWindow()860
+        print('findWindow:', hwnd)
+        win32gui.SetActiveWindow(hwnd)
+        # win32gui.ShowWindow(hwnd)
+        win32gui.MoveWindow(hwnd, 0, 0, 865, 830, True)
+        return win32gui.GetWindowRect(hwnd)
+    elif platform.system() == 'Linux':
+        pid = os.system('xdotool search --name "RuneLite"')
+        os.system('xdotool windowsize' + pid + '865 830')
+        os.system('xdotool windowmove' + pid + '0 0')
+        os.system('xdotool windowactivate ' + pid)
+        return pid
 
 dimensions = find_window()
 

@@ -4,6 +4,7 @@ from utilities import inventory as inv, core
 from skills import herblore as h, fletching as fl, magic as ma
 import pytesseract
 import sys
+from osrsbox import items_api
 
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 # define the list of boundaries
@@ -24,12 +25,10 @@ item_ids_to_fetch = [
 
 
 if __name__ == "__main__":
+    items = items_api.load()
     core.find_window()
-    item_icons = []
     inventory = []
     # drop = right click, +30y, left click
-    for id in item_ids_to_fetch:
-        item_icons.append((id, inv.get_icon(id)))
     selected = None
     status = ""
     mode = sys.argv[1]

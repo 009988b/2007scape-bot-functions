@@ -1,4 +1,4 @@
-from PIL import ImageGrab, Image, ImageOps
+from PIL import Image, ImageOps
 import cv2 as cv
 from osrsbox import items_api, monsters_api
 import requests
@@ -6,6 +6,7 @@ from io import BytesIO
 from random import random
 import pyautogui, time
 import numpy as np
+import pyscreenshot as ImageGrab
 
 all_db_items = items_api.load()
 all_db_monsters = monsters_api.load()

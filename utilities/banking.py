@@ -2,7 +2,7 @@ import pyautogui
 from random import randint, random
 import time
 import pytesseract
-from PIL import ImageGrab
+import pyscreenshot as ImageGrab
 import numpy as np
 import cv2 as cv
 from utilities import core
@@ -35,19 +35,19 @@ def is_open(debug_show):
 
 def set_quantity(quantity):
     if quantity == "all":
-        pt = (350 + randint(-2, 2), 640 + randint(-2, 2))
+        pt = (380 + randint(-2, 2), 640 + randint(-2, 2))
         pyautogui.moveTo(pt[0],pt[1],random()/4,pyautogui.easeInQuad)
         time.sleep(0.25)
         pyautogui.click(clicks=1, interval=(random() * 1.5) / 2, button='left')
     if quantity == "custom":
-        pt = (330 + randint(-2, 2), 640 + randint(-2, 2))
+        pt = (352 + randint(-2, 2), 640 + randint(-2, 2))
         pyautogui.moveTo(pt[0],pt[1],random()/4,pyautogui.easeInQuad)
         time.sleep(0.25)
         pyautogui.click(clicks=1, interval=(random() * 1.5) / 2, button='left')
 
 
 def close():
-    pt = (500 + randint(-2, 2), 50 + randint(-2, 2))
+    pt = (530 + randint(-2, 2), 50 + randint(-2, 2))
     pyautogui.moveTo(pt[0],pt[1],random()/4,pyautogui.easeInQuad)
     pyautogui.click(clicks=1, interval=(random() * 1.5) / 2, button='left')
 
@@ -57,12 +57,12 @@ def withdraw(tab, coord, should_select_tab):
     # tabs y = 80
     # items x = 103 + 50(x)
     # items y = 120 + 38(y)
-    pt_tab = (100 + (40 * tab) + randint(-3, 3), 80 + randint(-3, 3))
+    pt_tab = (165 + (40 * tab) + randint(-3, 3), 80 + randint(-3, 3))
     if should_select_tab:
         pyautogui.moveTo(pt_tab[0],pt_tab[1],random()/6,pyautogui.easeInQuad)
         pyautogui.click(clicks=1, interval=random() / 2, button='left')
     time.sleep(0.1)
-    pt = (103 + (50 * coord[0]) + randint(-4, 4), 120 + (38 * coord[1]) + randint(-4, 4))
+    pt = (134 + (50 * coord[0]) + randint(-4, 4), 120 + (38 * coord[1]) + randint(-4, 4))
     pyautogui.moveTo(pt[0],pt[1],random()/4,pyautogui.easeInQuad)
     pyautogui.click(clicks=1, interval=random() / 2, button='left')
 

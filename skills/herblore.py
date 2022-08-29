@@ -1,12 +1,11 @@
 import pyautogui
 import cv2 as cv
 from random import randint, random
-from PIL import ImageGrab
 import numpy as np
 import time
 from utilities import banking as bank, inventory as inv
 import sys
-
+import pyscreenshot as ImageGrab
 
 def clean_inv():
     # x 600+45(x)

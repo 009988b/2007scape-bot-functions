@@ -1,10 +1,10 @@
 import pyautogui
 from random import randint, random
-from PIL import ImageGrab, Image, ImageOps
+from PIL import Image, ImageOps
 import numpy as np
 import math
 import cv2 as cv
-
+import pyscreenshot as ImageGrab
 
 def face_camera_north():
     offset = randint(-12, 12)
